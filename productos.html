@@ -35,38 +35,53 @@
     <nav>
         <ul class="main-menu">
           <li id="home"><a href="index.html">Home</a></li>
-          <li id="nosotros"><a href="nosotros.html">nosotros</a></li>
+          <li id="nosotros"><a href="nosotros.html">Nosotros</a></li>
           <li id="menu"><a href="menu.html">Menu</a></li>
           <li id="productos"><a href="productos.html">Productos</a></li>
         </ul>
     </nav>
     <hr>
-    <form action="insert">
+    <form id="form-product">
         <br>
         <input type="text" id="nombre" placeholder="Ingrese el nombre del producto">
         <input type="text" id="precio" placeholder="Ingrese el precio del producto">
         <input type="text" id="codigo" placeholder="Ingrese el codigo del producto">
         <button type="submit"> Agregar producto</button>
     </form>
+
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+      import {getFirestore,collection,addDoc,onSnapshot,deleteDoc,doc} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+    
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyCo8iBi0nhwfDfBudvyWoCKVKvF0rQjT2I",
+        authDomain: "cliente-2654a.firebaseapp.com",
+        projectId: "cliente-2654a",
+        storageBucket: "cliente-2654a.appspot.com",
+        messagingSenderId: "977150777866",
+        appId: "1:977150777866:web:a25bc9397b888ea9cb1df3"
+      };
+    
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+
+      const productform = document.getElementById("form-product");
+      productform.addEventListener("submit",async(e)=>{
+        e.preventDefault();
+        await addDoc(collection(db, "producto"), {
+          nombre: productform.nombre.value,
+          precio: productform.precio.value,
+          codigo: productform.codigo.value
+        });
+        productform,reset();
+      });
+
+    </script>
 </body>
-<script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import {getFirestore,collection,addDoc,onSnapshot,deleteDoc,doc} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-  
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyCo8iBi0nhwfDfBudvyWoCKVKvF0rQjT2I",
-      authDomain: "cliente-2654a.firebaseapp.com",
-      projectId: "cliente-2654a",
-      storageBucket: "cliente-2654a.appspot.com",
-      messagingSenderId: "977150777866",
-      appId: "1:977150777866:web:a25bc9397b888ea9cb1df3"
-    };
-  
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-  </script>
+
 </html>
